@@ -89,14 +89,24 @@ export function renderToSvg(
       );
       if (cell) {
         svgParts.push(
+          `<circle cx="${rectX + CELL_SIZE / 2}" cy="${
+            rectY + CELL_SIZE / 2
+          }" r="${CELL_SIZE * 0.35}" fill="${
+            cell.color === "w" ? "#fff" : "#000"
+          }" stroke="${cell.color === "w" ? "#000" : "#fff"}" stroke-width="${
+            CELL_SIZE * 0.025
+          }"/>`
+        );
+        svgParts.push(
           `<text x="${rectX + CELL_SIZE / 2}" y="${
             rectY + CELL_SIZE / 2
-          }" font-size="75" text-anchor="middle" alignment-baseline="central" fill="${
-            cell.color === "w" ? "#FFF" : "#000"
+          }" font-size="${
+            CELL_SIZE * 0.5
+          }" text-anchor="middle" alignment-baseline="central" fill="${
+            cell.color === "w" ? "#000" : "#fff"
           }">${cell.type}</text>`
         );
       }
-      console.log(y, x);
     }
   }
 
