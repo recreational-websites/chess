@@ -12,7 +12,7 @@ const CELL_SIZE = 100;
 
 export function renderToSvg(
   FEN: string,
-  { backgroundColor, offset = 50, skipSize, contain }: RenderToSvgOptions = {}
+  { backgroundColor, offset = 0, skipSize, contain }: RenderToSvgOptions = {}
 ): string {
   const svgParts: string[] = [];
 
