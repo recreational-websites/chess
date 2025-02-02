@@ -24,7 +24,7 @@ export async function GET(
   const chess = new Chess(realFEN);
 
   const svg = renderToSvg(realFEN, {
-    offset: 50,
+    offset: 25,
     backgroundColor: "transparent",
   });
 
