@@ -127,16 +127,18 @@ function NextMovesInternal({ FEN, onItemClick }: NextMovesProps) {
         <Tabs defaultValue="all">
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
-            {nextMoveGroups.map(([group]) => (
-              <TabsTrigger value={`group_${group}`}>{group}</TabsTrigger>
+            {nextMoveGroups.map(([group], i) => (
+              <TabsTrigger key={i} value={`group_${group}`}>
+                {group}
+              </TabsTrigger>
             ))}
           </TabsList>
           <TabsContent value="all">
             <div className={gridClassName}>
-              {nextMoveGroups.map(([_, members]) =>
-                members.map(({ FEN, move }) => (
+              {nextMoveGroups.flatMap(([_, members], i) =>
+                members.map(({ FEN, move }, j) => (
                   <ItemCard
-                    key={move.after}
+                    key={`${i}/${j}`}
                     FEN={FEN}
                     move={move}
                     onClick={(e) => handleItemClick(e, FEN)}
@@ -145,12 +147,12 @@ function NextMovesInternal({ FEN, onItemClick }: NextMovesProps) {
               )}
             </div>
           </TabsContent>
-          {nextMoveGroups.map(([group, members]) => (
-            <TabsContent value={`group_${group}`}>
+          {nextMoveGroups.map(([group, members], i) => (
+            <TabsContent key={i} value={`group_${group}`}>
               <div className={gridClassName}>
-                {members.map(({ FEN, move }) => (
+                {members.map(({ FEN, move }, i) => (
                   <ItemCard
-                    key={move.after}
+                    key={i}
                     FEN={FEN}
                     move={move}
                     onClick={(e) => handleItemClick(e, FEN)}
