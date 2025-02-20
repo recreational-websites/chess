@@ -1,5 +1,6 @@
+import { canonicalize } from "@/_internal/lib/chess/canonicalize";
+import { isValidFEN } from "@/_internal/lib/chess/isValidFEN";
 import { renderToSvg } from "@/_internal/lib/chess/renderToSvg";
-import { isValidFEN } from "@/_internal/lib/isValidFEN";
 import { Chess } from "chess.js";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
@@ -13,17 +14,20 @@ const BADGE_STYLE = {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { FEN: string[] } }
+  { params }: { params: { encoded: string } }
 ) {
-  const { FEN } = params;
-  const realFEN = decodeURIComponent(FEN.join("/"));
-  if (!isValidFEN(realFEN)) {
+  const canonicalized = canonicalize(params.encoded);
+  if (!canonicalized) {
+    return new Response("Not Found", { status: 404 });
+  }
+  const [canonical, FEN] = canonicalized;
+  if (canonical !== params.encoded || !isValidFEN(FEN)) {
     return new Response("Not Found", { status: 404 });
   }
 
-  const chess = new Chess(realFEN);
+  const chess = new Chess(FEN);
 
-  const svg = renderToSvg(realFEN, {
+  const svg = renderToSvg(FEN, {
     offset: 25,
     backgroundColor: "transparent",
   });
@@ -58,7 +62,7 @@ export async function GET(
           }}
         >
           Chess
-          <div style={{ padding: 24 }}>{realFEN}</div>
+          <div style={{ padding: 24 }}>{FEN}</div>
           <div
             style={{
               display: "flex",

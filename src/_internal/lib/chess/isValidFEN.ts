@@ -4,7 +4,7 @@ export function isValidFEN(FEN: string): boolean {
   try {
     new Chess(FEN);
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

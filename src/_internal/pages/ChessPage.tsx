@@ -11,6 +11,9 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Board } from "../components/Board";
 import { Comment } from "../components/Comment";
+import { FENToBoardState } from "../lib/chess/FENToBoardState";
+import { bitsToB64 } from "../lib/chess/bitsToB64";
+import { boardStateToBits } from "../lib/chess/boardStateToBits";
 import { on } from "../lib/on";
 
 export interface ChessPageProps {
@@ -226,7 +229,7 @@ function SidePane({ FEN, onClose, onItemClick, isOpen }: SidePaneProps) {
         </Button>
       </div>
       <Board FEN={FEN} width="100%" height="200px" />
-      <Link href={`/${encodeURIComponent(FEN)}`}>
+      <Link href={`/${bitsToB64(boardStateToBits(FENToBoardState(FEN)))}`}>
         <Button className="mt-4 w-full">Open in Full Page</Button>
       </Link>
       <NextMoves FEN={FEN} onItemClick={onItemClick} />

@@ -1,5 +1,15 @@
-import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
-export default function Page() {
-  throw redirect("/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+import MainPage, {
+  generateMetadata as mainGenerateMetaData,
+} from "./[encoded]/page";
+
+const DEFAULT = "u7JZfSsPWUn6VneWnmXnvYvY24dxcm0MqAkCBkKCkSDk-wss";
+
+export default async function Page() {
+  return MainPage({ params: { encoded: DEFAULT } });
+}
+
+export function generateMetadata(): Metadata {
+  return mainGenerateMetaData({ params: { encoded: DEFAULT } });
 }

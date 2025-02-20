@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { MouseEvent, memo } from "react";
+import { bitsToB64 } from "../lib/chess/bitsToB64";
+import { boardStateToBits } from "../lib/chess/boardStateToBits";
+import { FENToBoardState } from "../lib/chess/FENToBoardState";
 import { renderToSvg } from "../lib/chess/renderToSvg";
 
 export interface BoardProps {
@@ -13,7 +16,7 @@ function BoardInternal({ FEN, width, height, onClick }: BoardProps) {
   const svgString = renderToSvg(FEN, {
     skipSize: true,
   });
-  const href = `/${encodeURIComponent(FEN)}`;
+  const href = `/${bitsToB64(boardStateToBits(FENToBoardState(FEN)))}`;
 
   return (
     <Link
