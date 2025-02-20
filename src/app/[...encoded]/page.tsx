@@ -1,5 +1,5 @@
+import { isValidFEN } from "@/_internal/lib/chess/isValidFEN";
 import { env } from "@/_internal/lib/env";
-import { isValidFEN } from "@/_internal/lib/isValidFEN";
 import { ChessPage } from "@/_internal/pages/ChessPage";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
